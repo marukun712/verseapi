@@ -100,4 +100,4 @@ console.log('情報を更新しました。 ')
 setInterval(() => {
     req();
     console.log('情報を更新しました。 ')
-}, 5.76e+6);
+}, 6000000);
