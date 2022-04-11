@@ -1,9 +1,11 @@
 import express from "express";
 var app = express();
 var port = 2100
+import cros from 'cros'
 import dotenv from 'dotenv'
 dotenv.config();
 import fs from 'fs'
+app.use(cors())
 
 app.get('/api', function(req, res) {
     const json = JSON.parse(fs.readFileSync('./res.json', 'utf8'));
