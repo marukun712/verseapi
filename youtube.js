@@ -95,5 +95,6 @@ function req() {
 }
 
 setInterval(() => {
-    console.log("Interval type3");
+    req();
+    console.log('情報を更新しました。 ')
 }, 18000000);
