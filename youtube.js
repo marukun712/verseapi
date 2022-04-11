@@ -1,7 +1,7 @@
-import fetch from 'node-fetch';
-import dotenv from 'dotenv'
+import { fetch } from 'node-fetch';
+import { dotenv } from 'dotenv'
 dotenv.config();
-import fs from 'fs'
+import { fs } from 'fs'
 
 var member = {
     'uno': {
