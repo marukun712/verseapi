@@ -97,4 +97,4 @@ function req() {
 setInterval(() => {
     req();
     console.log('情報を更新しました。 ')
-}, 7200000);
+}, 5.76e+6);
