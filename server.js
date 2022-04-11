@@ -1,9 +1,9 @@
-import { express } from "express";
+import express from "express";
 var app = express();
 var port = 3000
-import { dotenv } from 'dotenv'
+import dotenv from 'dotenv'
 dotenv.config();
-import { fs } from 'fs'
+import fs from 'fs'
 
 app.get('/api', function(req, res) {
     const json = JSON.parse(fs.readFileSync('./res.json', 'utf8'));
