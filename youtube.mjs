@@ -94,6 +94,9 @@ function req() {
     setTimeout(write, 1000);
 }
 
+req();
+console.log('情報を更新しました。 ')
+
 setInterval(() => {
     req();
     console.log('情報を更新しました。 ')
