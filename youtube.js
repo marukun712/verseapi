@@ -33,7 +33,13 @@ function req() {
                 var ID = json.items[i].id.videoId
                 var title = json.items[i].snippet.title
                 var image = json.items[i].snippet.thumbnails.medium.url;
-                items.push({ title: title, image: image, id: ID })
+                items.push({
+                    items: {
+                        title: title,
+                        image: image,
+                        id: ID
+                    }
+                })
             }
         });
 
@@ -45,7 +51,13 @@ function req() {
                 var ID = json.items[i].id.videoId
                 var title = json.items[i].snippet.title
                 var image = json.items[i].snippet.thumbnails.medium.url;
-                items.push({ title: title, image: image, id: ID })
+                items.push({
+                    items: {
+                        title: title,
+                        image: image,
+                        id: ID
+                    }
+                })
             }
         });
 
@@ -57,7 +69,13 @@ function req() {
                 var ID = json.items[i].id.videoId
                 var title = json.items[i].snippet.title
                 var image = json.items[i].snippet.thumbnails.medium.url;
-                items.push({ title: title, image: image, id: ID })
+                items.push({
+                    items: {
+                        title: title,
+                        image: image,
+                        id: ID
+                    }
+                })
             }
         });
 
@@ -69,7 +87,13 @@ function req() {
                 var ID = json.items[i].id.videoId
                 var title = json.items[i].snippet.title
                 var image = json.items[i].snippet.thumbnails.medium.url;
-                items.push({ title: title, image: image, id: ID })
+                items.push({
+                    items: {
+                        title: title,
+                        image: image,
+                        id: ID
+                    }
+                })
             }
         });
 
@@ -81,7 +105,13 @@ function req() {
                 var ID = json.items[i].id.videoId
                 var title = json.items[i].snippet.title
                 var image = json.items[i].snippet.thumbnails.medium.url;
-                items.push({ title: title, image: image, id: ID })
+                items.push({
+                    items: {
+                        title: title,
+                        image: image,
+                        id: ID
+                    }
+                })
             }
         });
 
