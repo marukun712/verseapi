@@ -35,6 +35,7 @@ function req() {
             var num = json.items.length;
             for (let i = 0; i < num; i++) {
                 var ID = json.items[i].id.videoId
+                ids.push(ID)
                 var title = json.items[i].snippet.title
                 var image = json.items[i].snippet.thumbnails.medium.url;
                 items.push({
@@ -44,7 +45,6 @@ function req() {
                         id: ID
                     }
                 })
-                ids.push(ID)
             }
         });
 
@@ -54,6 +54,7 @@ function req() {
             var num = json.items.length;
             for (let i = 0; i < num; i++) {
                 var ID = json.items[i].id.videoId
+                ids.push(ID)
                 var title = json.items[i].snippet.title
                 var image = json.items[i].snippet.thumbnails.medium.url;
                 items.push({
@@ -63,7 +64,6 @@ function req() {
                         id: ID
                     }
                 })
-                ids.push(ID)
             }
         });
 
@@ -73,6 +73,7 @@ function req() {
             var num = json.items.length;
             for (let i = 0; i < num; i++) {
                 var ID = json.items[i].id.videoId
+                ids.push(ID)
                 var title = json.items[i].snippet.title
                 var image = json.items[i].snippet.thumbnails.medium.url;
                 items.push({
@@ -82,33 +83,16 @@ function req() {
                         id: ID
                     }
                 })
-                ids.push(ID)
             }
         });
-    fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.otoha.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
-        .then(res => res.json())
-        .then(json => {
-            var num = json.items.length;
-            for (let i = 0; i < num; i++) {
-                var ID = json.items[i].id.videoId
-                var title = json.items[i].snippet.title
-                var image = json.items[i].snippet.thumbnails.medium.url;
-                items.push({
-                    items: {
-                        title: title,
-                        image: image,
-                        id: ID
-                    }
-                })
-                ids.push(ID)
-            }
-        });
+
     fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.sera.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
         .then(res => res.json())
         .then(json => {
             var num = json.items.length;
             for (let i = 0; i < num; i++) {
                 var ID = json.items[i].id.videoId
+                ids.push(ID)
                 var title = json.items[i].snippet.title
                 var image = json.items[i].snippet.thumbnails.medium.url;
                 items.push({
@@ -118,23 +102,44 @@ function req() {
                         id: ID
                     }
                 })
+            }
+        });
+
+    fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.otoha.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
+        .then(res => res.json())
+        .then(json => {
+            var num = json.items.length;
+            for (let i = 0; i < num; i++) {
+                var ID = json.items[i].id.videoId
                 ids.push(ID)
+                var title = json.items[i].snippet.title
+                var image = json.items[i].snippet.thumbnails.medium.url;
+                items.push({
+                    items: {
+                        title: title,
+                        image: image,
+                        id: ID
+                    }
+                })
             }
         });
 
     function gettime() {
         console.log(ids)
         var num = ids.length;
-        for (let i = 0; i < num; i++) {
-            fetch(`https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=${ids}&key=${process.env.key}`)
-                .then(res => res.json())
-                .then(json => {
+
+        fetch(`https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=${ids}&key=${process.env.key}`)
+            .then(res => res.json())
+            .then(json => {
+                for (let i = 0; i < num; i++) {
+                    console.log(JSON.stringify(json))
                     var timedata = json.items[i].liveStreamingDetails.scheduledStartTime
                     var time = moment(timedata).format('YYYY.MM.DD HH:mm')
                     times.push(time)
                     console.log(times)
-                })
-        }
+                }
+            })
+
     };
 
     function pushtime() {
