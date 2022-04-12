@@ -29,6 +29,8 @@ var times = []
 
 function req() {
     items.length = 0;
+    ids.length = 0;
+    times.length = 0;
     fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.maru.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
         .then(res => res.json())
         .then(json => {
@@ -132,11 +134,9 @@ function req() {
             .then(res => res.json())
             .then(json => {
                 for (let i = 0; i < num; i++) {
-                    console.log(JSON.stringify(json))
                     var timedata = json.items[i].liveStreamingDetails.scheduledStartTime
                     var time = moment(timedata).format('YYYY.MM.DD HH:mm')
                     times.push(time)
-                    console.log(times)
                 }
             })
 
@@ -158,12 +158,11 @@ function req() {
     setTimeout(gettime, 1000);
     setTimeout(pushtime, 2000);
     setTimeout(write, 3000);
+    console.log('情報を更新しました。')
 }
 
 req();
-console.log('情報を更新しました。')
 
 setInterval(() => {
     req();
-    console.log('情報を更新しました。')
 }, 6000000);
