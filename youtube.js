@@ -127,7 +127,6 @@ function req() {
         });
 
     function gettime() {
-        console.log(ids)
         var num = ids.length;
 
         fetch(`https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=${ids}&key=${process.env.key}`)
