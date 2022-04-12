@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import dotenv from 'dotenv'
 dotenv.config();
 import fs from 'fs'
-
+import moment from 'moment'
 var member = {
     'uno': {
         id: "UCLfAsY3iMUAF2vvDxvIjymQ"
@@ -23,9 +23,13 @@ var member = {
 
 var items = []
 
+var ids = []
+
+var times = []
+
 function req() {
     items.length = 0;
-    fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.itsuki.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
+    fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.maru.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
         .then(res => res.json())
         .then(json => {
             var num = json.items.length;
@@ -40,6 +44,7 @@ function req() {
                         id: ID
                     }
                 })
+                ids.push(ID)
             }
         });
 
@@ -58,10 +63,11 @@ function req() {
                         id: ID
                     }
                 })
+                ids.push(ID)
             }
         });
 
-    fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.maru.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
+    fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.itsuki.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
         .then(res => res.json())
         .then(json => {
             var num = json.items.length;
@@ -76,27 +82,9 @@ function req() {
                         id: ID
                     }
                 })
+                ids.push(ID)
             }
         });
-
-    fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.sera.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
-        .then(res => res.json())
-        .then(json => {
-            var num = json.items.length;
-            for (let i = 0; i < num; i++) {
-                var ID = json.items[i].id.videoId
-                var title = json.items[i].snippet.title
-                var image = json.items[i].snippet.thumbnails.medium.url;
-                items.push({
-                    items: {
-                        title: title,
-                        image: image,
-                        id: ID
-                    }
-                })
-            }
-        });
-
     fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.otoha.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
         .then(res => res.json())
         .then(json => {
@@ -112,16 +100,59 @@ function req() {
                         id: ID
                     }
                 })
+                ids.push(ID)
             }
         });
+    fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + member.sera.id + "&key=" + process.env.key + "&eventType=upcoming&type=video")
+        .then(res => res.json())
+        .then(json => {
+            var num = json.items.length;
+            for (let i = 0; i < num; i++) {
+                var ID = json.items[i].id.videoId
+                var title = json.items[i].snippet.title
+                var image = json.items[i].snippet.thumbnails.medium.url;
+                items.push({
+                    items: {
+                        title: title,
+                        image: image,
+                        id: ID
+                    }
+                })
+                ids.push(ID)
+            }
+        });
+
+    function gettime() {
+        console.log(ids)
+        var num = ids.length;
+        for (let i = 0; i < num; i++) {
+            fetch(`https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=${ids}&key=${process.env.key}`)
+                .then(res => res.json())
+                .then(json => {
+                    var timedata = json.items[i].liveStreamingDetails.scheduledStartTime
+                    var time = moment(timedata).format('YYYY.MM.DD HH:mm')
+                    times.push(time)
+                    console.log(times)
+                })
+        }
+    };
+
+    function pushtime() {
+        var num = times.length
+        for (let i = 0; i < num; i++) {
+            items[i].items.time = times[i]
+        }
+    }
 
     function write() {
         fs.writeFile('res.json', JSON.stringify(items, null, '    '), (err) => {
             if (err) console.log(`error!::${err}`);
         });
-
     }
-    setTimeout(write, 1000);
+
+    setTimeout(gettime, 1000);
+    setTimeout(pushtime, 2000);
+    setTimeout(write, 3000);
 }
 
 req();
