@@ -1,9 +1,14 @@
 import express from "express";
-var app = express();
 var port = 2100
 import dotenv from 'dotenv'
 dotenv.config();
 import fs from 'fs'
+import https from 'https'
+var app = express();
+var server = https.createServer({
+    key: fs.readFileSync('/etc/letsencrypt/live/marukunserver.ml/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/marukunserver.ml/cert.pem'),
+}, app)
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
@@ -31,6 +36,6 @@ app.get('/', function(req, res) {
 })
 
 
-app.listen(port, function() {
+server.listen(port, function() {
     console.log("http://localhost:" + port + "で起動")
 })
