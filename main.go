@@ -20,7 +20,7 @@ type Item struct {
 func main() {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"*"},
+		AllowOrigins: []string{"https://okaramap.netlify.app"},
 	}))
 
 	router.GET("/api", api)
